@@ -1,7 +1,5 @@
 import Axios from './request'
 
-// const headers = { 'Content-Type': 'application/json' }
-
 export interface CreateUserType {
   email: string
   password: string

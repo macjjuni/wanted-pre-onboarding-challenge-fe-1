@@ -1,15 +1,16 @@
-import { useState, useEffect, useContext } from 'react'
+import { useEffect, useState, useContext } from 'react'
 import { AuthDispatch } from '../../App'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { Typography, IconButton, Menu, MenuItem } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { HeaderStyled } from '../../components/style'
-import { routes } from '../../routes'
 import LogoutIcon from '@mui/icons-material/Logout'
+import { pageInfo } from '../../routes'
 
 const Header = () => {
   const [title, setTitle] = useState<string>('')
   const { pathname } = useLocation()
+
   const dispatch = useContext(AuthDispatch)
   const navigate = useNavigate()
 
@@ -36,12 +37,12 @@ const Header = () => {
 
   // 페이지 타이틀 초기화
   useEffect(() => {
-    const idx = routes.findIndex((r, idx) => {
+    const idx = pageInfo.findIndex((r, idx) => {
       if (pathname === '/') return true // root 경로일 경우
       if (idx !== 0 && pathname.includes(r.path)) return true
       return false
     })
-    setTitle(routes[idx].title)
+    setTitle(pageInfo[idx]?.title ? pageInfo[idx].title : 'Not Found - 404')
   }, [pathname])
 
   return (
@@ -65,16 +66,31 @@ const Header = () => {
             'aria-labelledby': 'basic-button',
           }}
         >
-          {routes.map((r) => (
-            <MenuItem
-              key={r.id}
-              onClick={() => {
-                handlePage(r.path)
-              }}
-            >
-              {r.title}
-            </MenuItem>
-          ))}
+          {pageInfo.map((r) => {
+            if (dispatch?.token !== '' && r.auth === true) {
+              return (
+                <MenuItem
+                  key={r.id}
+                  onClick={() => {
+                    handlePage(r.path)
+                  }}
+                >
+                  {r.title}
+                </MenuItem>
+              )
+            } else if (dispatch?.token === '') {
+              return (
+                <MenuItem
+                  key={r.id}
+                  onClick={() => {
+                    handlePage(r.path)
+                  }}
+                >
+                  {r.title}
+                </MenuItem>
+              )
+            }
+          })}
         </Menu>
       </div>
     </HeaderStyled>

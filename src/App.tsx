@@ -1,6 +1,7 @@
 import { useEffect, useState, createContext, Dispatch, SetStateAction } from 'react'
-import Main from './layout/main'
 import Header from './layout/header'
+import Main from './layout/main'
+import { ToastContainer } from 'react-toastify'
 
 // =================== 전역관리 ===================
 type AuthDispatchType = Dispatch<SetStateAction<string>>
@@ -9,15 +10,12 @@ export interface AuthProp {
   setToken: AuthDispatchType
 }
 export const AuthDispatch = createContext<AuthProp | null>(null)
-// =================== 전역관리 ===================
 
 const App = () => {
   const [token, setToken] = useState<string>('')
-  console.log(token)
-
   useEffect(() => {
     const auth = localStorage.getItem('token')
-    auth !== null && setToken(auth)
+    if (auth !== null) setToken(auth)
   }, [])
 
   return (
@@ -26,6 +24,7 @@ const App = () => {
         <Header />
         <Main />
       </div>
+      <ToastContainer />
     </AuthDispatch.Provider>
   )
 }
