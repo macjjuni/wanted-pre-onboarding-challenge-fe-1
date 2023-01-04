@@ -1,15 +1,14 @@
-import { useState, useEffect, SetStateAction } from 'react'
-import { getTodos, type TodosProp, type TodoProp } from '../../api/todo'
-import { useNavigate, Link } from 'react-router-dom'
-import { AxiosResponse } from 'axios'
+import { useState, useEffect } from 'react'
+import { getTodoList, type TodosProp, type TodoType } from '../../api/todo'
+import { Link } from 'react-router-dom'
+import { ListWrap, ListItem } from '../../components/style'
 
 const Home = () => {
-  const [list, setList] = useState<TodosProp[]>()
-  const navigate = useNavigate()
+  const [list, setList] = useState<TodoType[]>()
   // Todo List 가져오기
-  const handleTodos = async () => {
+  const getTodos = async () => {
     try {
-      const res: AxiosResponse<TodosProp> = await getTodos()
+      const res: TodosProp = await getTodoList()
       console.log(res.data)
 
       setList(res.data)
@@ -17,18 +16,28 @@ const Home = () => {
       console.error(e)
     }
   }
+  const dateFormatter = (date: string) => {
+    return date.substr(0, 10)
+  }
 
   useEffect(() => {
-    handleTodos()
+    getTodos()
   }, [])
 
   return (
-    <div>
-      <ul>
-        {list && list.map((todo) => <li key={todo.id}>{todo.title}</li>)}
-        <li></li>
-      </ul>
-    </div>
+    <>
+      <ListWrap>
+        {list &&
+          list.map((todo) => (
+            <ListItem key={todo.id}>
+              <Link to={`/todo/${todo.id}`}>
+                <span className="todo-title">{todo.title}</span>
+                <span className="todo-date">{dateFormatter(todo.createdAt)}</span>
+              </Link>
+            </ListItem>
+          ))}
+      </ListWrap>
+    </>
   )
 }
 export default Home

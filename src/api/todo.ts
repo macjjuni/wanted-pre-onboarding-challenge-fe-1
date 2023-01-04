@@ -1,26 +1,29 @@
 import { AxiosResponse } from 'axios'
 import Axios from './request'
 
-export interface TodoProp {
+export type TodoType = {
   title: string
   content: string
   id: string
-  createAt: string
+  createdAt: string
   updatedAt: string
 }
 
 export interface TodosProp {
-  data: TodoProp[]
+  data: Array<TodoType>
+}
+export interface TodoProp {
+  data: TodoType
 }
 
 // Todo List 조회
-export const getTodos = (): Promise<AxiosResponse<TodosProp>> => {
+export const getTodoList = (): Promise<TodosProp> => {
   const url = '/todos'
   return Axios.get(url)
 }
 
 // Todo 조회
-export const getTodo = (id: string): Promise<AxiosResponse<TodoProp>> => {
+export const getTodoById = (id: string): Promise<TodoProp> => {
   const url = '/todos/' + encodeURI(id)
   return Axios.get(url)
 }
@@ -31,19 +34,19 @@ export interface CRUDTodoProp {
 }
 
 // Todo 생성
-export const createTodo = (todo: CRUDTodoProp): Promise<AxiosResponse<TodoProp>> => {
+export const createTodo = (todo: CRUDTodoProp): Promise<AxiosResponse<TodoType>> => {
   const url = '/todos'
   return Axios.post(url, todo)
 }
 
 // Todo 수정
-export const updateTodo = (id: string, todo: CRUDTodoProp): Promise<AxiosResponse<TodoProp>> => {
+export const updateTodo = (id: string, todo: CRUDTodoProp): Promise<AxiosResponse<TodoType>> => {
   const url = '/todos/' + encodeURI(id)
   return Axios.put(url, todo)
 }
 
 // Todo 삭제
-export const deleteTodo = (id: string): Promise<AxiosResponse<TodoProp>> => {
+export const deleteTodo = (id: string): Promise<AxiosResponse<TodoType>> => {
   const url = '/todos/' + encodeURI(id)
   return Axios.delete(url)
 }

@@ -1,7 +1,7 @@
-import { useContext } from 'react'
+import { useContext, useLayoutEffect } from 'react'
 import { AuthDispatch } from '../../App'
 import { Button, TextField } from '@mui/material'
-import { FormStyled } from '../../components/style'
+import { LoginJoinForm } from '../../components/style'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useNavigate, Navigate } from 'react-router-dom'
@@ -16,6 +16,8 @@ const validationSchema = yup.object({
 const Login = () => {
   const navigate = useNavigate()
   const dispatch = useContext(AuthDispatch)
+
+  useLayoutEffect(() => {}, [])
 
   const formik = useFormik({
     initialValues: {
@@ -41,11 +43,11 @@ const Login = () => {
   }
 
   // 로그인 상태일 경우 홈으로 이동
-  if (dispatch !== null && dispatch.token !== '') return <Navigate to="/" />
+  if (dispatch !== null && dispatch.token !== null) return <Navigate to="/" />
 
   return (
     <>
-      <FormStyled onSubmit={formik.handleSubmit} className="form-wrap">
+      <LoginJoinForm onSubmit={formik.handleSubmit}>
         <TextField
           name="email"
           label="이메일"
@@ -69,19 +71,21 @@ const Login = () => {
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={formik.touched.password && formik.errors.password}
         />
-        <Button variant="contained" color="secondary" type="submit">
-          로그인
-        </Button>
-        <Button
-          variant="outlined"
-          type="button"
-          onClick={() => {
-            navigate('/join')
-          }}
-        >
-          회원가입
-        </Button>
-      </FormStyled>
+        <div>
+          <Button variant="contained" color="secondary" type="submit">
+            로그인
+          </Button>
+          <Button
+            variant="outlined"
+            type="button"
+            onClick={() => {
+              navigate('/join')
+            }}
+          >
+            회원가입
+          </Button>
+        </div>
+      </LoginJoinForm>
     </>
   )
 }

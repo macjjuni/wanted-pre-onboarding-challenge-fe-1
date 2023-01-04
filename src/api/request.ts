@@ -33,7 +33,7 @@ Axios.interceptors.response.use(
   (error) => {
     console.error(error)
     toast(error.response.data.details)
-    if (error.response.status === 400) router.navigate('/login')
+    if (error.response.status === 400) router.navigate('/login', { replace: true })
     return Promise.reject(error)
   }
 )

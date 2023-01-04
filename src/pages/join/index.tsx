@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { AuthDispatch } from '../../App'
 import { Button, TextField } from '@mui/material'
-import { FormStyled } from '../../components/style'
+import { LoginJoinForm } from '../../components/style'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useNavigate, Navigate } from 'react-router-dom'
@@ -54,11 +54,11 @@ const Join = () => {
   }
 
   // 로그인 상태일 경우 홈으로 이동
-  if (dispatch !== null && dispatch.token !== '') return <Navigate to="/" />
+  if (dispatch !== null && dispatch.token !== null) return <Navigate to="/" />
 
   return (
     <>
-      <FormStyled onSubmit={formik.handleSubmit} className="form-wrap">
+      <LoginJoinForm onSubmit={formik.handleSubmit} className="form-wrap">
         <TextField
           name="email"
           label="이메일"
@@ -95,20 +95,21 @@ const Join = () => {
           error={formik.touched.password_chk && Boolean(formik.errors.password_chk)}
           helperText={formik.touched.password_chk && formik.errors.password_chk}
         />
-
-        <Button variant="contained" color="secondary" type="submit">
-          회원가입
-        </Button>
-        <Button
-          variant="outlined"
-          type="button"
-          onClick={() => {
-            navigate('/login')
-          }}
-        >
-          로그인
-        </Button>
-      </FormStyled>
+        <div>
+          <Button variant="contained" color="secondary" type="submit">
+            회원가입
+          </Button>
+          <Button
+            variant="outlined"
+            type="button"
+            onClick={() => {
+              navigate('/login')
+            }}
+          >
+            로그인
+          </Button>
+        </div>
+      </LoginJoinForm>
     </>
   )
 }

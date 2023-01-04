@@ -4,7 +4,7 @@ import Home from './pages/home'
 import Login from './pages/login'
 import Join from './pages/join'
 import Detail from './pages/detail'
-import Write from './pages/write.tsx'
+import Write from './pages/write'
 import ErrorPage from './pages/error'
 
 interface PageInfoProp {
@@ -15,7 +15,7 @@ interface PageInfoProp {
 }
 
 export const pageInfo: PageInfoProp[] = [
-  { id: '0', path: '/', title: '홈', auth: true },
+  { id: '0', path: '/', title: 'Todo List', auth: true },
   { id: '1', path: '/login', title: '로그인', auth: false },
   { id: '2', path: '/join', title: '회원가입', auth: false },
   { id: '3', path: '/write', title: 'Todo 작성', auth: false },

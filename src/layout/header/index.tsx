@@ -1,12 +1,13 @@
 import { useEffect, useState, useContext } from 'react'
 import { AuthDispatch } from '../../App'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { Typography, IconButton, Menu, MenuItem } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import { Typography, IconButton } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
 import { HeaderStyled } from '../../components/style'
 import LogoutIcon from '@mui/icons-material/Logout'
+import HomeIcon from '@mui/icons-material/Home'
 import { pageInfo } from '../../routes'
+import { toast } from 'react-toastify'
 
 const Header = () => {
   const [title, setTitle] = useState<string>('')
@@ -15,24 +16,12 @@ const Header = () => {
   const dispatch = useContext(AuthDispatch)
   const navigate = useNavigate()
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
-  const handlePage = (path: string) => {
-    handleClose()
-    navigate(path)
-  }
-
   // 로그아웃
   const handleLogout = () => {
-    if (dispatch !== null) {
-      dispatch.setToken('')
+    if (dispatch !== null && dispatch.token !== null) {
       localStorage.removeItem('token')
+      dispatch.setToken(null)
+      toast('성공적으로 로그아웃 했습니다.')
     }
   }
 
@@ -62,44 +51,13 @@ const Header = () => {
         <IconButton onClick={handleLogout}>
           <LogoutIcon />
         </IconButton>
-        <IconButton id="basic-button" aria-controls={open ? 'basic-menu' : undefined} aria-haspopup="true" aria-expanded={open ? 'true' : undefined} onClick={handleClick}>
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          id="basic-menu"
-          anchorEl={anchorEl}
-          open={open}
-          onClose={handleClose}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
+        <IconButton
+          onClick={() => {
+            navigate('/')
           }}
         >
-          {pageInfo.map((r) => {
-            if (dispatch?.token !== '' && r.auth === true) {
-              return (
-                <MenuItem
-                  key={r.id}
-                  onClick={() => {
-                    handlePage(r.path)
-                  }}
-                >
-                  {r.title}
-                </MenuItem>
-              )
-            } else if (dispatch?.token === '') {
-              return (
-                <MenuItem
-                  key={r.id}
-                  onClick={() => {
-                    handlePage(r.path)
-                  }}
-                >
-                  {r.title}
-                </MenuItem>
-              )
-            }
-          })}
-        </Menu>
+          <HomeIcon />
+        </IconButton>
       </div>
     </HeaderStyled>
   )
