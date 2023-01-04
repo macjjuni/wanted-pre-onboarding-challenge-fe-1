@@ -3,6 +3,7 @@ import { AuthDispatch } from '../../App'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Typography, IconButton, Menu, MenuItem } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
+import CreateIcon from '@mui/icons-material/Create'
 import { HeaderStyled } from '../../components/style'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { pageInfo } from '../../routes'
@@ -51,6 +52,13 @@ const Header = () => {
         {title}
       </Typography>
       <div>
+        <IconButton
+          onClick={() => {
+            navigate('/write')
+          }}
+        >
+          <CreateIcon />
+        </IconButton>
         <IconButton onClick={handleLogout}>
           <LogoutIcon />
         </IconButton>

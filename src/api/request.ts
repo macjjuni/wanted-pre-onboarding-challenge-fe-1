@@ -32,8 +32,7 @@ Axios.interceptors.response.use(
   },
   (error) => {
     console.error(error)
-    // toast(error.response.data.details)
-    toast('로그인이 필요합니다.')
+    toast(error.response.data.details)
     if (error.response.status === 400) router.navigate('/login')
     return Promise.reject(error)
   }

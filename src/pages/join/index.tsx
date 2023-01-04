@@ -6,6 +6,7 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { createUser, type CreateUserType } from '../../api/user'
+import { toast } from 'react-toastify'
 
 // 회원가입 유효성 체크
 const validationSchema = yup.object({
@@ -43,7 +44,10 @@ const Join = () => {
       const { token } = await createUser(params)
       // 로컬스토리지에 토큰 저장 및 전역상태로 설정
       localStorage.setItem('token', token)
-      if (dispatch !== null) dispatch.setToken(token)
+      if (dispatch !== null) {
+        dispatch.setToken(token)
+        toast('성공적으로 로그인 했습니다.')
+      }
     } catch (e) {
       console.error(e)
     }

@@ -3,6 +3,8 @@ import App from './App'
 import Home from './pages/home'
 import Login from './pages/login'
 import Join from './pages/join'
+import Detail from './pages/detail'
+import Write from './pages/write.tsx'
 import ErrorPage from './pages/error'
 
 interface PageInfoProp {
@@ -13,9 +15,11 @@ interface PageInfoProp {
 }
 
 export const pageInfo: PageInfoProp[] = [
-  { id: '0', path: '/', title: 'Home', auth: true },
-  { id: '1', path: '/login', title: 'Login', auth: false },
-  { id: '2', path: '/join', title: 'Join', auth: false },
+  { id: '0', path: '/', title: '홈', auth: true },
+  { id: '1', path: '/login', title: '로그인', auth: false },
+  { id: '2', path: '/join', title: '회원가입', auth: false },
+  { id: '3', path: '/write', title: 'Todo 작성', auth: false },
+  { id: '3', path: '/todo', title: 'Todo', auth: false },
 ]
 
 export const pages: RouteObject[] = [
@@ -27,46 +31,27 @@ export const pages: RouteObject[] = [
         path: '/',
         element: <Home />,
       },
-    ],
-  },
-  {
-    path: '/',
-    element: <App />,
-    children: [
       {
         path: 'login',
         element: <Login />,
       },
-    ],
-  },
-  {
-    path: '/',
-    element: <App />,
-    children: [
-      {
-        path: 'login',
-        element: <Login />,
-      },
-    ],
-  },
-  {
-    path: '/',
-    element: <App />,
-    children: [
       {
         path: 'join',
         element: <Join />,
       },
-    ],
-  },
-  {
-    path: '*',
-    element: <App />,
-    children: [
+      {
+        path: '/todo/:id',
+        element: <Detail />,
+      },
+      {
+        path: '/write',
+        element: <Write />,
+      },
       {
         path: '*',
         element: <ErrorPage />,
       },
     ],
+    errorElement: <ErrorPage />,
   },
 ]

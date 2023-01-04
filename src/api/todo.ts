@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios'
 import Axios from './request'
 
-interface TodoProp {
+export interface TodoProp {
   title: string
   content: string
   id: string
@@ -9,7 +9,7 @@ interface TodoProp {
   updatedAt: string
 }
 
-interface TodosProp {
+export interface TodosProp {
   data: TodoProp[]
 }
 
@@ -25,7 +25,7 @@ export const getTodo = (id: string): Promise<AxiosResponse<TodoProp>> => {
   return Axios.get(url)
 }
 
-interface CRUDTodoProp {
+export interface CRUDTodoProp {
   title: string
   content: string
 }

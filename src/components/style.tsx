@@ -14,5 +14,5 @@ export const HeaderStyled = styled.header`
 `
 
 export const MainStyled = styled.main`
-  padding: 15px 0;
+  padding-top: 15px;
 `
