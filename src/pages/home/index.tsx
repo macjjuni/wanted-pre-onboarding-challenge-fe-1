@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { getTodoList, type TodosProp, type TodoType } from '../../api/todo'
+import { getTodoList } from '../../api/todo'
+import { type TodosProp, type TodoType } from '../../api/type'
 import { Link } from 'react-router-dom'
-import { ListWrap, ListItem } from '../../components/style'
+import { ListWrap, ListItem } from '../../style'
 
 const Home = () => {
   const [list, setList] = useState<TodoType[]>()
@@ -9,8 +10,6 @@ const Home = () => {
   const getTodos = async () => {
     try {
       const res: TodosProp = await getTodoList()
-      console.log(res.data)
-
       setList(res.data)
     } catch (e) {
       console.error(e)

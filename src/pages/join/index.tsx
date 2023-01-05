@@ -1,7 +1,6 @@
-import { useContext } from 'react'
-import { AuthDispatch } from '../../App'
+import useAuth from '../../hook/useAuth'
 import { Button, TextField } from '@mui/material'
-import { LoginJoinForm } from '../../components/style'
+import { LoginJoinForm } from '../../style'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useNavigate, Navigate } from 'react-router-dom'
@@ -20,7 +19,7 @@ const validationSchema = yup.object({
 
 const Join = () => {
   const navigate = useNavigate()
-  const dispatch = useContext(AuthDispatch)
+  const { token, setToken } = useAuth()
 
   const formik = useFormik({
     initialValues: {
@@ -41,20 +40,18 @@ const Join = () => {
   // 회원가입
   const submit = async (params: CreateUserType) => {
     try {
-      const { token } = await createUser(params)
+      const { token: getToken } = await createUser(params)
       // 로컬스토리지에 토큰 저장 및 전역상태로 설정
-      localStorage.setItem('token', token)
-      if (dispatch !== null) {
-        dispatch.setToken(token)
-        toast('성공적으로 로그인 했습니다.')
-      }
+      localStorage.setItem('token', getToken)
+      setToken(getToken)
+      toast('성공적으로 로그인 했습니다.')
     } catch (e) {
       console.error(e)
     }
   }
 
   // 로그인 상태일 경우 홈으로 이동
-  if (dispatch !== null && dispatch.token !== null) return <Navigate to="/" />
+  if (token !== null) return <Navigate to="/" />
 
   return (
     <>

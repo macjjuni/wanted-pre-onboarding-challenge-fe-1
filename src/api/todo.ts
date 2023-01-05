@@ -1,20 +1,6 @@
 import { AxiosResponse } from 'axios'
 import Axios from './request'
-
-export type TodoType = {
-  title: string
-  content: string
-  id: string
-  createdAt: string
-  updatedAt: string
-}
-
-export interface TodosProp {
-  data: Array<TodoType>
-}
-export interface TodoProp {
-  data: TodoType
-}
+import { type TodosProp, type TodoProp, type TodoType, type CRUDTodoProp } from './type'
 
 // Todo List 조회
 export const getTodoList = (): Promise<TodosProp> => {
@@ -26,11 +12,6 @@ export const getTodoList = (): Promise<TodosProp> => {
 export const getTodoById = (id: string): Promise<TodoProp> => {
   const url = '/todos/' + encodeURI(id)
   return Axios.get(url)
-}
-
-export interface CRUDTodoProp {
-  title: string
-  content: string
 }
 
 // Todo 생성

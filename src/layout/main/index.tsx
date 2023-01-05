@@ -1,11 +1,7 @@
-import { Outlet } from 'react-router-dom'
-import { MainStyled } from '../../components/style'
+import { ReactNode } from 'react'
+import { MainStyled } from '../../style'
 
-const Main = () => {
-  return (
-    <MainStyled>
-      <Outlet />
-    </MainStyled>
-  )
+const Main = ({ children }: { children: ReactNode }) => {
+  return <MainStyled>{children}</MainStyled>
 }
 export default Main

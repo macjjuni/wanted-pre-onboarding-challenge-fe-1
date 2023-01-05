@@ -1,28 +1,22 @@
-import { useEffect } from 'react'
-import { useNavigate, Navigate } from 'react-router-dom'
+import Login from '../login'
+import useAuth from '../../hook/useAuth'
+import { useNavigate } from 'react-router-dom'
+import { todoValidSchema } from '../../utils/formik'
 import { useFormik } from 'formik'
-import * as yup from 'yup'
 import { TextField, Button } from '@mui/material'
-import { createTodo, type CRUDTodoProp } from '../../api/todo'
-import { useContext } from 'react'
-import { AuthDispatch } from '../../App'
-import { toast } from 'react-toastify'
-import { FormStyled } from '../../components/style'
-
-const validSchema = yup.object({
-  title: yup.string().required('제목을 입력해주세요.'),
-  content: yup.string().required('내용을 입력해주세요.'),
-})
+import { createTodo } from '../../api/todo'
+import { type CRUDTodoProp } from '../../api/type'
+import { FormStyled } from '../../style'
 
 const Write = () => {
-  const dispatch = useContext(AuthDispatch)
+  const { token } = useAuth()
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       title: '',
       content: '',
     },
-    validationSchema: validSchema,
+    validationSchema: todoValidSchema,
     onSubmit: (values) => {
       writeTodo(values)
     },
@@ -36,16 +30,8 @@ const Write = () => {
       console.error(e)
     }
   }
-
-  // 로그아웃 상태일 경우 로그인 페이지로이동
-  // useEffect(() => {
-  //   console.log(dispatch?.token)
-
-  //   if (dispatch !== null && dispatch.token === null) {
-  //     toast('로그인이 필요합니다.')
-  //     navigate('/login', { replace: true })
-  //   }
-  // }, [])
+  // 로그아웃 상태면 로그인 컴포넌트 렌더링
+  if (token === null) return <Login />
 
   return (
     <FormStyled onSubmit={formik.handleSubmit}>

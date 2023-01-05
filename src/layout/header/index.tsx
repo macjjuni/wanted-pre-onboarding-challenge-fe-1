@@ -1,28 +1,27 @@
-import { useEffect, useState, useContext } from 'react'
-import { AuthDispatch } from '../../App'
+import { useEffect, useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Typography, IconButton } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
-import { HeaderStyled } from '../../components/style'
+import { HeaderStyled } from '../../style'
 import LogoutIcon from '@mui/icons-material/Logout'
 import HomeIcon from '@mui/icons-material/Home'
 import { pageInfo } from '../../routes'
 import { toast } from 'react-toastify'
+import useAuth from '../../hook/useAuth'
 
 const Header = () => {
   const [title, setTitle] = useState<string>('')
   const { pathname } = useLocation()
 
-  const dispatch = useContext(AuthDispatch)
+  const { token, setToken } = useAuth()
   const navigate = useNavigate()
 
   // 로그아웃
   const handleLogout = () => {
-    if (dispatch !== null && dispatch.token !== null) {
-      localStorage.removeItem('token')
-      dispatch.setToken(null)
-      toast('성공적으로 로그아웃 했습니다.')
-    }
+    if (token === null) return
+    localStorage.removeItem('token')
+    setToken(null)
+    toast('성공적으로 로그아웃 했습니다.')
   }
 
   // 페이지 타이틀 초기화
