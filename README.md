@@ -19,3 +19,38 @@
 </div>
 
 <br>
+
+## 🌲 프로젝트 구조
+
+```
+wanted-pre-onboarding-challenge-fe-1
+├─ .env
+├─ package-lock.json
+├─ package.json
+├─ public
+├─ src
+│  ├─ App.tsx
+│  ├─ api
+│  ├─ component
+│  ├─ hook
+│  ├─ index.css
+│  ├─ index.tsx
+│  ├─ layout
+│  │  ├─ header
+│  │  └─ main
+│  ├─ pages
+│  │  ├─ detail
+│  │  ├─ error
+│  │  ├─ home
+│  │  ├─ join
+│  │  ├─ login
+│  │  └─ write
+│  ├─ routes.tsx
+│  ├─ store.ts
+│  ├─ style.tsx
+│  └─ utils
+│     └─ formik.ts
+├─ tsconfig.json
+└─ yarn.lock
+
+```
