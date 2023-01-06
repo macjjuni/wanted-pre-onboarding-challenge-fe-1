@@ -39,12 +39,12 @@ wanted-pre-onboarding-challenge-fe-1
 │  │  ├─ header
 │  │  └─ main
 │  ├─ pages
-│  │  ├─ detail
-│  │  ├─ error
-│  │  ├─ home
-│  │  ├─ join
-│  │  ├─ login
-│  │  └─ write
+│  │  ├─ detail :: Todo 상세페이지
+│  │  ├─ error :: 404 페이지
+│  │  ├─ home :: Todo 목록 페이지
+│  │  ├─ join :: 회원가입 페이지
+│  │  ├─ login :: 로그인 페이지
+│  │  └─ write :: 글작성 페이지
 │  ├─ routes.tsx
 │  ├─ store.ts
 │  ├─ style.tsx
