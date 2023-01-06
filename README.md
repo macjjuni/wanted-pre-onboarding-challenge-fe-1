@@ -49,7 +49,6 @@ wanted-pre-onboarding-challenge-fe-1
 │  ├─ store.ts
 │  ├─ style.tsx
 │  └─ utils
-│     └─ formik.ts
 ├─ tsconfig.json
 └─ yarn.lock
 
