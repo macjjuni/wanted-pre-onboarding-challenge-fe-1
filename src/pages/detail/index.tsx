@@ -53,6 +53,9 @@ const Detail = () => {
 
   // Todo 삭제
   const handleDelete = async () => {
+    let isAgree = window.confirm('삭제하시겠습니까?')
+    if (!isAgree) return
+
     try {
       await deleteTodo(id)
       toast('삭제를 완료했습니다.')
