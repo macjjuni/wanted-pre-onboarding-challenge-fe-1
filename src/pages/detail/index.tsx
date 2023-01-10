@@ -84,7 +84,7 @@ const Detail = () => {
               {formik.values.title}
             </TodoTitle>
             <TodoContent>
-              <DateStyled>{dateFormatter(formik.values.createdAt)}</DateStyled>
+              <DateStyled>작성일 : {dateFormatter(formik.values.createdAt)}</DateStyled>
               {formik.values.content}
             </TodoContent>
           </>
