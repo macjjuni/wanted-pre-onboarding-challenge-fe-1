@@ -1,33 +1,24 @@
+import { useEffect } from 'react'
 import useAuth from '../../hook/useAuth'
 import { Button, TextField } from '@mui/material'
 import { LoginJoinForm } from '../../style'
 import { useFormik } from 'formik'
-import * as yup from 'yup'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { joinValidSchema } from '../../utils/formik'
+import { useNavigate } from 'react-router-dom'
 import { createUser, type CreateUserType } from '../../api/user'
 import { toast } from 'react-toastify'
-
-// 회원가입 유효성 체크
-const validationSchema = yup.object({
-  email: yup.string().email('이메일 형식이 올바르지 않습니다.').required('이메일을 압력해주세요'),
-  password: yup.string().min(8, '최소 8자리 이상 비밀번호를 입력하세요.').required('비밀번호를 입력해주세요.'),
-  password_chk: yup
-    .string()
-    .oneOf([yup.ref('password'), null], '비밀번호가 일치하지 않습니다.')
-    .required('비밀번호를 입력해주세요.'),
-})
+import { Token } from '../../utils/token'
 
 const Join = () => {
+  const { token } = useAuth()
   const navigate = useNavigate()
-  const { token, setToken } = useAuth()
-
   const formik = useFormik({
     initialValues: {
       email: '',
       password: '',
       password_chk: '',
     },
-    validationSchema: validationSchema,
+    validationSchema: joinValidSchema,
     onSubmit: (values) => {
       const params = {
         email: values.email,
@@ -42,16 +33,17 @@ const Join = () => {
     try {
       const { token: getToken } = await createUser(params)
       // 로컬스토리지에 토큰 저장 및 전역상태로 설정
-      localStorage.setItem('token', getToken)
-      setToken(getToken)
+      Token.setToken(getToken)
       toast('성공적으로 로그인 했습니다.')
+      navigate('/')
     } catch (e) {
       console.error(e)
     }
   }
 
-  // 로그인 상태일 경우 홈으로 이동
-  if (token !== null) return <Navigate to="/" />
+  useEffect(() => {
+    if (token !== null) navigate('/')
+  }, [token])
 
   return (
     <>

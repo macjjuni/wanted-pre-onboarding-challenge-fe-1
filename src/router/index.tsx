@@ -1,12 +1,15 @@
 import { RouteObject } from 'react-router-dom'
-import App from './App'
-import Home from './pages/home'
-import Login from './pages/login'
-import Join from './pages/join'
-import Detail from './pages/detail'
-import Write from './pages/write'
-import ErrorPage from './pages/error'
-import { getTodoList } from './api/todo'
+import App from '../App'
+import Home from '../pages/home'
+import Login from '../pages/login'
+import Join from '../pages/join'
+import Detail from '../pages/detail'
+import Write from '../pages/write'
+import ErrorPage from '../pages/error'
+import { getTodoList } from '../api/todo'
+
+// import AuthHoc from '../HOC/AuthHoc'
+// const AuthHome = AuthHoc(Home)
 
 interface PageInfoProp {
   id: string

@@ -1,15 +1,16 @@
+import { useEffect, useRef } from 'react'
 import useAuth from '../../hook/useAuth'
 import { Button, TextField } from '@mui/material'
 import { LoginJoinForm } from '../../style'
 import { useFormik } from 'formik'
 import { userValidSchema } from '../../utils/formik'
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { Token } from '../../utils/token'
 import { loginUser, type CreateUserType } from '../../api/user'
 
 const Login = () => {
   const navigate = useNavigate()
-  const { token, setToken } = useAuth()
-
+  const { token } = useAuth()
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -26,14 +27,17 @@ const Login = () => {
     try {
       const { token: getToken } = await loginUser(params)
       // 로컬스토리지에 토큰 저장 및 전역상태로 설정
-      localStorage.setItem('token', getToken)
-      setToken(getToken)
+      Token.setToken(getToken)
+      navigate('/')
     } catch (e) {
       console.error(e)
     }
   }
+  useEffect(() => {
+    if (token !== null) navigate('/')
+  }, [token])
+
   // 로그인 상태일 경우 홈으로 이동
-  if (token !== null) return <Navigate to="/" />
 
   return (
     <>

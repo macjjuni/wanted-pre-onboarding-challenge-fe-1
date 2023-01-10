@@ -1,6 +1,16 @@
 import * as yup from 'yup'
 
 // 회원가입 유효성 체크
+export const joinValidSchema = yup.object({
+  email: yup.string().email('이메일 형식이 올바르지 않습니다.').required('이메일을 압력해주세요'),
+  password: yup.string().min(8, '최소 8자리 이상 비밀번호를 입력하세요.').required('비밀번호를 입력해주세요.'),
+  password_chk: yup
+    .string()
+    .oneOf([yup.ref('password'), null], '비밀번호가 일치하지 않습니다.')
+    .required('비밀번호를 입력해주세요.'),
+})
+
+// 로그인 유효성 체크
 export const userValidSchema = yup.object({
   email: yup.string().email('이메일 형식이 올바르지 않습니다.').required('이메일을 압력해주세요'),
   password: yup.string().min(8, '최소 8자리 이상 비밀번호를 입력하세요.').required('비밀번호를 입력해주세요.'),

@@ -9,7 +9,7 @@ import { type TodoProp, type TodoTypes, type CRUDTodoProp } from '../../api/type
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import { TodoContent, TodoTitle, ButtonWrap, DateStyled } from './style'
 import { toast } from 'react-toastify'
-import { dateFormatter } from '../../utils/format'
+import { dateFormatter } from '../../utils/valid'
 
 const Detail = () => {
   const { id } = useParams()

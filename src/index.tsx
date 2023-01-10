@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import { pages } from './routes'
+import { pages } from './router'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import 'react-toastify/dist/ReactToastify.css'
 

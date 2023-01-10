@@ -1,4 +1,4 @@
-import Axios from './request'
+import Axios from './Axios'
 
 export interface CreateUserType {
   email: string

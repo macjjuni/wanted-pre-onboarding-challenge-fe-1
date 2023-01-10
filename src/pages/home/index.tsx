@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useLoaderData } from 'react-router-dom'
-import { dateFormatter } from '../../utils/format'
+import { dateFormatter } from '../../utils/valid'
 import { type TodosTypes, type TodoTypes } from '../../api/type'
 import { Link } from 'react-router-dom'
 import { ListWrap, ListItem } from '../../style'

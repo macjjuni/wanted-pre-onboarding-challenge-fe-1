@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios'
-import Axios from './request'
+import Axios from './Axios'
 import { type TodosTypes, type TodoProp, type TodoTypes, type CRUDTodoProp } from './type'
 
 // Todo List 조회

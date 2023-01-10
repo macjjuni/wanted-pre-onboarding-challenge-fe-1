@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { router } from '..'
+import { Token } from '../utils/token'
+
 const apiUrl = process.env.REACT_APP_API
 
 const Axios = axios.create({
@@ -10,7 +12,8 @@ const Axios = axios.create({
 
 Axios.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token')
+    const token = Token.getToken()
+
     if (token !== null) {
       config.headers = {
         Authorization: `Bearer ${token}`,
