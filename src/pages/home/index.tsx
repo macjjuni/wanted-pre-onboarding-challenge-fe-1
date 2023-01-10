@@ -1,26 +1,16 @@
 import { useState, useEffect } from 'react'
-import { getTodoList } from '../../api/todo'
-import { type TodosProp, type TodoType } from '../../api/type'
+import { useLoaderData } from 'react-router-dom'
+import { dateFormatter } from '../../utils/format'
+import { type TodosTypes, type TodoTypes } from '../../api/type'
 import { Link } from 'react-router-dom'
 import { ListWrap, ListItem } from '../../style'
 
 const Home = () => {
-  const [list, setList] = useState<TodoType[]>()
-  // Todo List 가져오기
-  const getTodos = async () => {
-    try {
-      const res: TodosProp = await getTodoList()
-      setList(res.data)
-    } catch (e) {
-      console.error(e)
-    }
-  }
-  const dateFormatter = (date: string) => {
-    return date.substr(0, 10)
-  }
+  const { data } = useLoaderData() as TodosTypes
+  const [list, setList] = useState<TodoTypes[]>()
 
   useEffect(() => {
-    getTodos()
+    setList(data)
   }, [])
 
   return (

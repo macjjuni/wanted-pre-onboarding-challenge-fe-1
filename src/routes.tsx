@@ -6,6 +6,7 @@ import Join from './pages/join'
 import Detail from './pages/detail'
 import Write from './pages/write'
 import ErrorPage from './pages/error'
+import { getTodoList } from './api/todo'
 
 interface PageInfoProp {
   id: string
@@ -26,9 +27,13 @@ export const pages: RouteObject[] = [
   {
     path: '/',
     element: <App />,
+    id: 'root',
     children: [
       {
         path: '/',
+        loader: () => {
+          return getTodoList()
+        },
         element: <Home />,
       },
       {

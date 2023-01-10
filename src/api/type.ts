@@ -1,4 +1,4 @@
-export type TodoType = {
+export type TodoTypes = {
   title: string
   content: string
   id: string
@@ -6,11 +6,11 @@ export type TodoType = {
   updatedAt: string
 }
 
-export interface TodosProp {
-  data: Array<TodoType>
+export interface TodosTypes {
+  data: TodoTypes[]
 }
 export interface TodoProp {
-  data: TodoType
+  data: TodoTypes
 }
 
 export interface CRUDTodoProp {

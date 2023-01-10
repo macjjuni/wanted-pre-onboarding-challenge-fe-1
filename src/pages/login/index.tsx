@@ -32,7 +32,6 @@ const Login = () => {
       console.error(e)
     }
   }
-
   // 로그인 상태일 경우 홈으로 이동
   if (token !== null) return <Navigate to="/" />
 

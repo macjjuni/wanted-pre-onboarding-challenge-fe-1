@@ -1,20 +1,21 @@
 import React, { useLayoutEffect, useState } from 'react'
-import { useParams, Navigate, useNavigate } from 'react-router-dom'
+import { useParams, Navigate, useNavigate, useLoaderData } from 'react-router-dom'
 import { getTodoById, deleteTodo, updateTodo } from '../../api/todo'
 import { todoValidSchema } from '../../utils/formik'
 import { useFormik } from 'formik'
 import { TextField, Button } from '@mui/material'
 import { FormStyled } from '../../style'
-import { type TodoProp, type TodoType, type CRUDTodoProp } from '../../api/type'
+import { type TodoProp, type TodoTypes, type CRUDTodoProp } from '../../api/type'
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import { TodoContent, TodoTitle, ButtonWrap, DateStyled } from './style'
 import { toast } from 'react-toastify'
+import { dateFormatter } from '../../utils/format'
 
 const Detail = () => {
   const { id } = useParams()
   const navigate = useNavigate()
   const [isEdit, SetIsEdit] = useState<boolean>(false)
-  const formik = useFormik<TodoType>({
+  const formik = useFormik<TodoTypes>({
     initialValues: {
       id: '',
       title: '',
@@ -83,7 +84,7 @@ const Detail = () => {
               {formik.values.title}
             </TodoTitle>
             <TodoContent>
-              <DateStyled>{formik.values.createdAt}</DateStyled>
+              <DateStyled>{dateFormatter(formik.values.createdAt)}</DateStyled>
               {formik.values.content}
             </TodoContent>
           </>
