@@ -1,7 +1,7 @@
 import Login from '../login'
 import useAuth from '../../hook/useAuth'
 import { useNavigate } from 'react-router-dom'
-import { todoValidSchema } from '../../utils/formik'
+import { todoValidSchema } from '../../utils/validation'
 import { useFormik } from 'formik'
 import { TextField, Button } from '@mui/material'
 import { createTodo } from '../../api/todo'

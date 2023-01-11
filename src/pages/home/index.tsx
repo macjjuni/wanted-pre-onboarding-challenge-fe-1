@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react'
-import { useLoaderData } from 'react-router-dom'
-import { dateFormatter } from '../../utils/valid'
-import { type TodosTypes, type TodoTypes } from '../../api/type'
+import { dateFormatter } from '../../utils/formatter'
+import { getTodoList } from '../../api/todo'
+import { type TodoTypes } from '../../api/type'
 import { Link } from 'react-router-dom'
 import { ListWrap, ListItem } from '../../style'
 
 const Home = () => {
-  const { data } = useLoaderData() as TodosTypes
   const [list, setList] = useState<TodoTypes[]>()
 
-  useEffect(() => {
+  const getTodos = async () => {
+    const { data } = await getTodoList()
     setList(data)
+  }
+
+  useEffect(() => {
+    getTodos()
   }, [])
 
   return (

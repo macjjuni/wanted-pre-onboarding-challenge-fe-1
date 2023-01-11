@@ -9,7 +9,7 @@ const CenterStyled = styled.div`
   transform: translate(-50%, -50%);
 `
 
-const ErrorPage = () => {
+const Error = () => {
   const navigate = useNavigate()
   return (
     <CenterStyled>
@@ -25,4 +25,4 @@ const ErrorPage = () => {
   )
 }
 
-export default ErrorPage
+export default Error

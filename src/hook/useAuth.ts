@@ -1,18 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useRef } from 'react'
 import { Token } from '../utils/token'
 
 type TokenTypes = string | null
 
 const useAuth = () => {
-  const [token, setToken] = useState<TokenTypes>(null)
-
-  useEffect(() => {
-    const tokenVal = Token.getToken()
-    if (tokenVal === null) {
-      return
-    }
-    setToken(tokenVal)
-  }, [])
+  const tokenRef = useRef<TokenTypes>(Token.getToken())
+  const token = tokenRef.current
 
   return { token }
 }

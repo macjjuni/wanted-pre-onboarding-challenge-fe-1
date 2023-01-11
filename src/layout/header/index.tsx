@@ -5,7 +5,7 @@ import CreateIcon from '@mui/icons-material/Create'
 import { HeaderStyled } from '../../style'
 import LogoutIcon from '@mui/icons-material/Logout'
 import HomeIcon from '@mui/icons-material/Home'
-import { pageInfo } from '../../router'
+import { pageList } from '../../router'
 import { toast } from 'react-toastify'
 import { Token } from '../../utils/token'
 
@@ -23,12 +23,8 @@ const Header = () => {
 
   // 페이지 타이틀 초기화
   useEffect(() => {
-    const idx = pageInfo.findIndex((r, idx) => {
-      if (pathname === '/') return true // root 경로일 경우
-      if (idx !== 0 && pathname.includes(r.path)) return true
-      return false
-    })
-    setTitle(pageInfo[idx]?.title ? pageInfo[idx].title : 'Not Found - 404')
+    const route = pageList[0]
+    setTitle(route ? route.title : 'Not Found - 404')
   }, [pathname])
 
   return (

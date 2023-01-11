@@ -5,25 +5,27 @@ import Login from '../pages/login'
 import Join from '../pages/join'
 import Detail from '../pages/detail'
 import Write from '../pages/write'
-import ErrorPage from '../pages/error'
-import { getTodoList } from '../api/todo'
+import Error from '../pages/error'
+import withAuth from '../HOC/withAuth'
 
-// import AuthHoc from '../HOC/AuthHoc'
-// const AuthHome = AuthHoc(Home)
+const AuthHome = withAuth(Home)
+const AuthDetail = withAuth(Detail)
+const AuthWrite = withAuth(Write)
 
 interface PageInfoProp {
   id: string
   path: string
   title: string
-  auth: boolean
+  element: React.ReactNode
 }
 
-export const pageInfo: PageInfoProp[] = [
-  { id: '0', path: '/', title: 'Todo List', auth: true },
-  { id: '1', path: '/login', title: '로그인', auth: false },
-  { id: '2', path: '/join', title: '회원가입', auth: false },
-  { id: '3', path: '/write', title: 'Todo 작성', auth: false },
-  { id: '3', path: '/todo', title: 'Todo', auth: false },
+export const pageList: PageInfoProp[] = [
+  { id: '0', path: '/', title: 'Todo List', element: <AuthHome /> },
+  { id: '1', path: '/login', title: '로그인', element: <Login /> },
+  { id: '2', path: '/join', title: '회원가입', element: <Join /> },
+  { id: '3', path: '/write', title: 'Todo 작성', element: <AuthWrite /> },
+  { id: '4', path: '/todo/:id', title: 'Todo', element: <AuthDetail /> },
+  { id: '5', path: '*', title: 'Not Found - 404', element: <Error /> },
 ]
 
 export const pages: RouteObject[] = [
@@ -31,35 +33,12 @@ export const pages: RouteObject[] = [
     path: '/',
     element: <App />,
     id: 'root',
-    children: [
-      {
-        path: '/',
-        loader: () => {
-          return getTodoList()
-        },
-        element: <Home />,
-      },
-      {
-        path: 'login',
-        element: <Login />,
-      },
-      {
-        path: 'join',
-        element: <Join />,
-      },
-      {
-        path: '/todo/:id',
-        element: <Detail />,
-      },
-      {
-        path: '/write',
-        element: <Write />,
-      },
-      {
-        path: '*',
-        element: <ErrorPage />,
-      },
-    ],
-    errorElement: <ErrorPage />,
+    children: pageList.map((page) => {
+      return {
+        path: page.path,
+        element: page.element,
+      }
+    }),
+    errorElement: <Error />,
   },
 ]

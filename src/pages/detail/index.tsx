@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useState } from 'react'
 import { useParams, Navigate, useNavigate, useLoaderData } from 'react-router-dom'
 import { getTodoById, deleteTodo, updateTodo } from '../../api/todo'
-import { todoValidSchema } from '../../utils/formik'
+import { todoValidSchema } from '../../utils/validation'
 import { useFormik } from 'formik'
 import { TextField, Button } from '@mui/material'
 import { FormStyled } from '../../style'
@@ -9,7 +9,7 @@ import { type TodoProp, type TodoTypes, type CRUDTodoProp } from '../../api/type
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import { TodoContent, TodoTitle, ButtonWrap, DateStyled } from './style'
 import { toast } from 'react-toastify'
-import { dateFormatter } from '../../utils/valid'
+import { dateFormatter } from '../../utils/formatter'
 
 const Detail = () => {
   const { id } = useParams()
