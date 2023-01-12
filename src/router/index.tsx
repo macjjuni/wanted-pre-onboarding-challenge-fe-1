@@ -6,7 +6,7 @@ import Join from '../pages/join'
 import Detail from '../pages/detail'
 import Write from '../pages/write'
 import Error from '../pages/error'
-import withAuth from '../HOC/withAuth'
+import withAuth from '../hoc/withAuth'
 
 // (🔑) => 로그인 권한이 필요한 컴포넌트들
 const AuthHome = withAuth(Home)

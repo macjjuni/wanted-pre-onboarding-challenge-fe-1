@@ -1,15 +1,13 @@
-import Login from '../login'
-import useAuth from '../../hook/useAuth'
 import { useNavigate } from 'react-router-dom'
-import { todoValidSchema } from '../../utils/validation'
 import { useFormik } from 'formik'
+import { todoValidSchema } from '../../utils/validation'
 import { TextField, Button } from '@mui/material'
 import { createTodo } from '../../api/todo'
-import { type CRUDTodoProp } from '../../api/type'
 import { FormStyled } from '../../style'
 
+import { type CRUDTodoProp } from '../../api/type'
+
 const Write = () => {
-  const { token } = useAuth()
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
@@ -30,8 +28,6 @@ const Write = () => {
       console.error(e)
     }
   }
-  // 로그아웃 상태면 로그인 컴포넌트 렌더링
-  if (token === null) return <Login />
 
   return (
     <FormStyled onSubmit={formik.handleSubmit}>
