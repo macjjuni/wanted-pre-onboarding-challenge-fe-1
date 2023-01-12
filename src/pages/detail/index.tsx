@@ -1,19 +1,20 @@
 import React, { useLayoutEffect, useState } from 'react'
-import { useParams, Navigate, useNavigate, useLoaderData } from 'react-router-dom'
+import { useParams, Navigate, useNavigate } from 'react-router-dom'
+import { FormStyled } from '../../style'
 import { getTodoById, deleteTodo, updateTodo } from '../../api/todo'
 import { todoValidSchema } from '../../utils/validation'
+import { dateFormatter } from '../../utils/formatter'
 import { useFormik } from 'formik'
 import { TextField, Button } from '@mui/material'
-import { FormStyled } from '../../style'
-import { type TodoProp, type TodoTypes, type CRUDTodoProp } from '../../api/type'
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import { TodoContent, TodoTitle, ButtonWrap, DateStyled } from './style'
 import { toast } from 'react-toastify'
-import { dateFormatter } from '../../utils/formatter'
+
+import { type TodoProp, type TodoTypes, type CRUDTodoProp } from '../../api/type'
 
 const Detail = () => {
-  const { id } = useParams()
   const navigate = useNavigate()
+  const { id } = useParams()
   const [isEdit, SetIsEdit] = useState<boolean>(false)
   const formik = useFormik<TodoTypes>({
     initialValues: {
@@ -35,7 +36,7 @@ const Detail = () => {
 
   if (id === undefined) return <Navigate to="/error" />
 
-  // 업데이트 모드로 셋팅
+  // 업데이트 모드로 변경
   const handleEidt = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     SetIsEdit(true)

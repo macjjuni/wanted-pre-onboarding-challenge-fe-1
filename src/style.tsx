@@ -35,22 +35,6 @@ export const GlobalStyle = createGlobalStyle`
     list-style: none;
     padding-left: 0;
   }
-  #root {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 570px;
-    height: 700px;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
-    padding: 0 25px 25px 25px;
-    background: #fff;
-    border-radius: 12px;
-    overflow: hidden;
-  }
 
   @media screen and (max-width: 768px) {
     .App {
@@ -66,6 +50,23 @@ export const GlobalStyle = createGlobalStyle`
 `
 
 // ---------------- Layout ----------------
+
+export const LayoutStyled = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 570px;
+  height: 700px;
+  box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+  padding: 0 25px 25px 25px;
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+`
 
 export const HeaderStyled = styled.header`
   display: flex;
