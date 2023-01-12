@@ -8,18 +8,19 @@ import Write from '../pages/write'
 import Error from '../pages/error'
 import withAuth from '../HOC/withAuth'
 
+// (🔑) => 로그인 권한이 필요한 컴포넌트들
 const AuthHome = withAuth(Home)
 const AuthDetail = withAuth(Detail)
 const AuthWrite = withAuth(Write)
 
-interface PageInfoProp {
+interface IPageList {
   id: string
   path: string
   title: string
   element: React.ReactNode
 }
 
-export const pageList: PageInfoProp[] = [
+export const pageList: IPageList[] = [
   { id: '0', path: '/', title: 'Todo List', element: <AuthHome /> },
   { id: '1', path: '/login', title: '로그인', element: <Login /> },
   { id: '2', path: '/join', title: '회원가입', element: <Join /> },
