@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios'
-import Axios from './Axios'
-import { type TodosTypes, type TodoProp, type TodoTypes, type CRUDTodoProp } from './type'
+import Axios from './axios'
+import { type TodosTypes, type TodoProp, type TodoTypes, type CRUDTodoProp } from './todo.type'
 
 // Todo List 조회
 export const getTodoList = (): Promise<TodosTypes> => {

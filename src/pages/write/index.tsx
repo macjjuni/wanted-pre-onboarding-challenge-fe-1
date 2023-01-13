@@ -5,7 +5,7 @@ import { TextField, Button } from '@mui/material'
 import { createTodo } from '../../api/todo'
 import { FormStyled } from '../../style'
 
-import { type CRUDTodoProp } from '../../api/type'
+import { type CRUDTodoProp } from '../../api/todo.type'
 
 const Write = () => {
   const navigate = useNavigate()

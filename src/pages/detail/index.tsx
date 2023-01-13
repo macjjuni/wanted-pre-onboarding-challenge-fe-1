@@ -10,12 +10,12 @@ import EventNoteIcon from '@mui/icons-material/EventNote'
 import { TodoContent, TodoTitle, ButtonWrap, DateStyled } from './style'
 import { toast } from 'react-toastify'
 
-import { type TodoProp, type TodoTypes, type CRUDTodoProp } from '../../api/type'
+import { type TodoProp, type TodoTypes, type CRUDTodoProp } from '../../api/todo.type'
 
 const Detail = () => {
   const navigate = useNavigate()
   const { id } = useParams()
-  const [isEdit, SetIsEdit] = useState<boolean>(false)
+  const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const formik = useFormik<TodoTypes>({
     initialValues: {
       id: '',
@@ -34,13 +34,14 @@ const Detail = () => {
     handleTodo()
   }, [])
 
-  if (id === undefined) return <Navigate to="/error" />
-
   // 업데이트 모드로 변경
   const handleEidt = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    SetIsEdit(true)
+    setIsEditMode(true)
   }
+
+  // id값이 잘 못 들어온 경우 에러 떤지기
+  if (id === undefined) return <Navigate to="/error" />
 
   // Todo 조회
   const handleTodo = async () => {
@@ -72,7 +73,7 @@ const Detail = () => {
       const res = await updateTodo(id, todo)
       toast('업데이트를 완료했습니다.')
       formik.setValues(res.data)
-      SetIsEdit(false)
+      setIsEditMode(false)
     } catch (e) {
       console.error(e)
     }
@@ -81,7 +82,7 @@ const Detail = () => {
   return (
     <>
       <FormStyled onSubmit={formik.handleSubmit}>
-        {!isEdit && (
+        {!isEditMode && (
           <>
             <TodoTitle>
               <EventNoteIcon />
@@ -94,7 +95,7 @@ const Detail = () => {
           </>
         )}
 
-        {isEdit && (
+        {isEditMode && (
           <>
             <TextField
               label="제목"
@@ -122,9 +123,8 @@ const Detail = () => {
             />
           </>
         )}
-
         <ButtonWrap>
-          {!isEdit ? (
+          {!isEditMode ? (
             <Button variant="contained" color="primary" type="button" fullWidth onClick={handleEidt}>
               수정
             </Button>
@@ -133,7 +133,6 @@ const Detail = () => {
               수정하기
             </Button>
           )}
-
           <Button variant="contained" color="error" type="button" fullWidth onClick={handleDelete}>
             삭제
           </Button>

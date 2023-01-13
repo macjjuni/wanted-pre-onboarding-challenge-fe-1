@@ -1,17 +1,18 @@
-import { useEffect } from 'react'
+import { Token } from '../../utils/token'
 import useAuth from '../../hook/useAuth'
+import { useFormik } from 'formik'
+import { Navigate, useNavigate } from 'react-router-dom'
 import { Button, TextField } from '@mui/material'
 import { LoginJoinForm } from '../../style'
-import { useFormik } from 'formik'
 import { joinValidSchema } from '../../utils/validation'
-import { useNavigate } from 'react-router-dom'
-import { createUser, type CreateUserType } from '../../api/user'
+import { createUser } from '../../api/user'
+import { type CreateUserType } from '../../api/user.type'
 import { toast } from 'react-toastify'
-import { Token } from '../../utils/token'
 
 const Join = () => {
   const { token } = useAuth()
   const navigate = useNavigate()
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -28,6 +29,8 @@ const Join = () => {
     },
   })
 
+  if (token !== null) return <Navigate to="/" replace />
+
   // 회원가입
   const submit = async (params: CreateUserType) => {
     try {
@@ -40,10 +43,6 @@ const Join = () => {
       console.error(e)
     }
   }
-
-  useEffect(() => {
-    if (token !== null) navigate('/')
-  }, [token])
 
   return (
     <>

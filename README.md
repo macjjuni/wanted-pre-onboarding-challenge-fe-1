@@ -53,3 +53,21 @@ wanted-pre-onboarding-challenge-fe-1
 └─ yarn.lock
 
 ```
+
+<br>
+
+## - 패키지 설치 명령어
+
+```
+> yarn
+> npm i
+```
+
+<br>
+
+## - 빌드 명령어
+
+```
+> yarn build
+> npm run build
+```

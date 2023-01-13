@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import useAuth from '../../hook/useAuth'
 import { Button, TextField } from '@mui/material'
 import { LoginJoinForm } from '../../style'
@@ -6,7 +6,8 @@ import { useFormik } from 'formik'
 import { userValidSchema } from '../../utils/validation'
 import { useNavigate } from 'react-router-dom'
 import { Token } from '../../utils/token'
-import { loginUser, type CreateUserType } from '../../api/user'
+import { loginUser } from '../../api/user'
+import { type CreateUserType } from '../../api/user.type'
 
 const Login = () => {
   const navigate = useNavigate()

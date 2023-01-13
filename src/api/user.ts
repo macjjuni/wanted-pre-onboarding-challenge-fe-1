@@ -1,13 +1,5 @@
-import Axios from './Axios'
-
-export interface CreateUserType {
-  email: string
-  password: string
-}
-interface CreateUserResType {
-  message: string
-  token: string
-}
+import Axios from './axios'
+import { type CreateUserResType, type CreateUserType } from './user.type'
 
 export type CUResType = Promise<CreateUserResType>
 

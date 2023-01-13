@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { dateFormatter } from '../../utils/formatter'
 import { getTodoList } from '../../api/todo'
-import { type TodoTypes } from '../../api/type'
+import { type TodoTypes } from '../../api/todo.type'
 import { Link } from 'react-router-dom'
 import { ListWrap, ListItem } from '../../style'
 
