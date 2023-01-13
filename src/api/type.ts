@@ -17,3 +17,7 @@ export interface CRUDTodoProp {
   title: string
   content: string
 }
+
+export interface IAxiosErr {
+  details: string
+}

@@ -1,7 +1,8 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { toast } from 'react-toastify'
 import { router } from '..'
 import { Token } from '../utils/token'
+import { type IAxiosErr } from './type'
 
 const apiUrl = process.env.REACT_APP_API
 
@@ -33,10 +34,13 @@ Axios.interceptors.response.use(
     toast(res.message)
     return res
   },
-  (error) => {
+  (error: AxiosError<IAxiosErr>) => {
     console.error(error)
-    toast(error.response.data.details)
-    if (error.response.status === 400) router.navigate('/login', { replace: true })
+    const { response } = error
+    if (response) {
+      toast(response.data.details)
+      if (response.status === 400) router.navigate('/login', { replace: true })
+    }
     return Promise.reject(error)
   }
 )
