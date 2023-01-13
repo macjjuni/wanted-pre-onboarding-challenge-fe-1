@@ -1,5 +1,5 @@
 import { RouteObject } from 'react-router-dom'
-import App from '../App'
+import Layout from '../layout'
 import Home from '../pages/home'
 import Login from '../pages/login'
 import Join from '../pages/join'
@@ -32,7 +32,7 @@ export const pageList: IPageList[] = [
 export const pages: RouteObject[] = [
   {
     path: '/',
-    element: <App />,
+    element: <Layout />,
     id: 'root',
     children: pageList.map((page) => {
       return {
