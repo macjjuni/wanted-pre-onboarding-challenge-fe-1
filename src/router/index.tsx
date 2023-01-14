@@ -5,7 +5,8 @@ import Login from '../pages/login'
 import Join from '../pages/join'
 import Detail from '../pages/detail'
 import Write from '../pages/write'
-import Error from '../pages/error'
+import Error from '../pages/error/404'
+import NetworkError from '../pages/error/network'
 import withAuth from '../hoc/withAuth'
 
 // (🔑) => 로그인 권한이 필요한 컴포넌트들
@@ -22,11 +23,12 @@ interface IPageList {
 
 export const pageList: IPageList[] = [
   { id: '0', path: '/', title: 'Todo List', element: <AuthHome /> },
-  { id: '1', path: '/login', title: '로그인', element: <Login /> },
-  { id: '2', path: '/join', title: '회원가입', element: <Join /> },
-  { id: '3', path: '/write', title: 'Todo 작성', element: <AuthWrite /> },
+  { id: '1', path: '/auth/login', title: '로그인', element: <Login /> },
+  { id: '2', path: '/auth/join', title: '회원가입', element: <Join /> },
+  { id: '3', path: '/todo/write', title: 'Todo 작성', element: <AuthWrite /> },
   { id: '4', path: '/todo/:id', title: 'Todo', element: <AuthDetail /> },
-  { id: '5', path: '*', title: 'Not Found - 404', element: <Error /> },
+  { id: '5', path: '/error', title: 'Todo', element: <NetworkError /> },
+  { id: '6', path: '*', title: 'Not Found - 404', element: <Error /> },
 ]
 
 export const pages: RouteObject[] = [

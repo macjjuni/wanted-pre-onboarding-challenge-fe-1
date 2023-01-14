@@ -74,7 +74,7 @@ const Login = () => {
             variant="outlined"
             type="button"
             onClick={() => {
-              navigate('/join')
+              navigate('/auth/join')
             }}
           >
             회원가입

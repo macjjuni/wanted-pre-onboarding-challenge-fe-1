@@ -18,7 +18,7 @@ const Header = () => {
   const handleLogout = () => {
     Token.removeToken()
     toast('성공적으로 로그아웃 했습니다.')
-    navigate('/login')
+    navigate('/auth/login')
   }
 
   // 페이지 타이틀 초기화

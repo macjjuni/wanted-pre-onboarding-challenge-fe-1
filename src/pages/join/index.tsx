@@ -91,7 +91,7 @@ const Join = () => {
             variant="outlined"
             type="button"
             onClick={() => {
-              navigate('/login')
+              navigate('/auth/login')
             }}
           >
             로그인

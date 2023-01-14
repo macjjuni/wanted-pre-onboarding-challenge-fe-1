@@ -41,7 +41,7 @@ const Detail = () => {
   }
 
   // id값이 잘 못 들어온 경우 에러 떤지기
-  if (id === undefined) return <Navigate to="/error" />
+  if (id === undefined) return <Navigate to={`/${id}`} />
 
   // Todo 조회
   const handleTodo = async () => {
