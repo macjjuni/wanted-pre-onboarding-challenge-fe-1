@@ -1,8 +1,7 @@
 import axios, { AxiosError } from 'axios'
 import { toast } from 'react-toastify'
 import { router } from '..'
-import { Token } from '../utils/token'
-import { type IAxiosErr } from './todo.type'
+import { Token } from './token'
 
 const apiUrl = process.env.REACT_APP_API
 
@@ -34,7 +33,7 @@ Axios.interceptors.response.use(
     toast(res.message)
     return res
   },
-  (error: AxiosError<IAxiosErr>) => {
+  (error: AxiosError<{ details: string }>) => {
     console.error(error)
     const { response } = error
 

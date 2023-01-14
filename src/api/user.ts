@@ -1,4 +1,4 @@
-import Axios from './axios'
+import Axios from '../utils/axios'
 import { type CreateUserResType, type CreateUserType } from './user.type'
 
 export type CUResType = Promise<CreateUserResType>
