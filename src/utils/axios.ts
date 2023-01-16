@@ -38,8 +38,12 @@ Axios.interceptors.response.use(
     const { response } = error
 
     if (response) {
-      toast(response.data.details)
-      if (response.status === 400) router.navigate('/login', { replace: true })
+      if (response.data.details === 'Token is missing') {
+        toast('로그인 정보가 유효하지 않습니다.')
+        router.navigate('/auth/login', { replace: true })
+      } else {
+        toast(response.data.details)
+      }
     } else {
       toast('네트워크 연결 상태를 확인하세요.')
       router.navigate('/error')
