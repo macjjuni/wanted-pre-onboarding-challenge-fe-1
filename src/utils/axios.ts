@@ -1,17 +1,17 @@
-import axios, { AxiosError } from 'axios'
+import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import { router } from '..'
 import { Token } from './token'
 
-const apiUrl = process.env.REACT_APP_API
+const baseURL = process.env.REACT_APP_API
 
 const Axios = axios.create({
-  baseURL: apiUrl,
+  baseURL: baseURL,
   timeout: 180000,
 })
 
 Axios.interceptors.request.use(
-  (config) => {
+  (config: AxiosRequestConfig) => {
     const token = Token.getToken()
 
     if (token !== null) {
@@ -28,7 +28,7 @@ Axios.interceptors.request.use(
 )
 
 Axios.interceptors.response.use(
-  (response) => {
+  (response: AxiosResponse) => {
     const res = response.data
     toast(res.message)
     return res

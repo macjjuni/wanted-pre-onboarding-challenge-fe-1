@@ -1,8 +1,8 @@
-export interface CreateUserType {
+export interface CreateUserTypes {
   email: string
   password: string
 }
-export interface CreateUserResType {
+export interface IAuthResTypes {
   message: string
   token: string
 }

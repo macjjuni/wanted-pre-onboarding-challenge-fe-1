@@ -6,8 +6,8 @@ import { useFormik } from 'formik'
 import { userValidSchema } from '../../utils/validation'
 import { useNavigate } from 'react-router-dom'
 import { Token } from '../../utils/token'
-import { loginUser } from '../../api/user'
-import { type CreateUserType } from '../../api/user.type'
+import { loginUser } from '../../api/auth'
+import { type CreateUserTypes } from '../../api/auth.type'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -24,11 +24,11 @@ const Login = () => {
   })
 
   // 로그인
-  const submit = async (params: CreateUserType) => {
+  const submit = async (params: CreateUserTypes) => {
     try {
-      const { token: getToken } = await loginUser(params)
+      const data = await loginUser(params)
       // 로컬스토리지에 토큰 저장 및 전역상태로 설정
-      Token.setToken(getToken)
+      Token.setToken(data.token)
       navigate('/')
     } catch (e) {
       console.error(e)

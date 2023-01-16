@@ -5,9 +5,10 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { Button, TextField } from '@mui/material'
 import { LoginJoinForm } from '../../style'
 import { joinValidSchema } from '../../utils/validation'
-import { createUser } from '../../api/user'
-import { type CreateUserType } from '../../api/user.type'
+import { createUser } from '../../api/auth'
+import { type CreateUserTypes, type IAuthResTypes } from '../../api/auth.type'
 import { toast } from 'react-toastify'
+import { AxiosResponse } from 'axios'
 
 const Join = () => {
   const { token } = useAuth()
@@ -32,11 +33,11 @@ const Join = () => {
   if (token !== null) return <Navigate to="/" replace />
 
   // 회원가입
-  const submit = async (params: CreateUserType) => {
+  const submit = async (params: CreateUserTypes) => {
     try {
-      const { token: getToken } = await createUser(params)
+      const data = await createUser(params)
       // 로컬스토리지에 토큰 저장 및 전역상태로 설정
-      Token.setToken(getToken)
+      Token.setToken(data.token)
       toast('성공적으로 로그인 했습니다.')
       navigate('/')
     } catch (e) {
