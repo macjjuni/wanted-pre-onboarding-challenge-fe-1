@@ -1,17 +1,18 @@
-import { useEffect } from 'react'
 import useAuth from '../../hook/useAuth'
-import { Button, TextField } from '@mui/material'
-import { LoginJoinForm } from '../../style'
+import useLogin from '../../hook/mutation/auth/useLogin'
+
+import { useNavigate, Navigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { userValidSchema } from '../../utils/validation'
-import { useNavigate } from 'react-router-dom'
-import { Token } from '../../utils/token'
-import { loginUser } from '../../api/auth'
-import { type CreateUserTypes } from '../../api/auth.type'
+
+import { Button, TextField } from '@mui/material'
+import { LoginJoinForm } from '../../style'
 
 const Login = () => {
-  const navigate = useNavigate()
   const { token } = useAuth()
+  const { mutate: loginMutate } = useLogin()
+  const navigate = useNavigate()
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -19,26 +20,11 @@ const Login = () => {
     },
     validationSchema: userValidSchema,
     onSubmit: (values) => {
-      submit(values)
+      loginMutate(values)
     },
   })
 
-  // 로그인
-  const submit = async (params: CreateUserTypes) => {
-    try {
-      const data = await loginUser(params)
-      // 로컬스토리지에 토큰 저장 및 전역상태로 설정
-      Token.setToken(data.token)
-      navigate('/')
-    } catch (e) {
-      console.error(e)
-    }
-  }
-  useEffect(() => {
-    if (token !== null) navigate('/')
-  }, [token])
-
-  // 로그인 상태일 경우 홈으로 이동
+  if (token !== null) return <Navigate to="/" replace />
 
   return (
     <>

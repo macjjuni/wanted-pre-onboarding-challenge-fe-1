@@ -35,7 +35,14 @@ const Header = () => {
       <div>
         <IconButton
           onClick={() => {
-            navigate('/write')
+            navigate('/todo/write')
+          }}
+        >
+          <CreateIcon />
+        </IconButton>
+        <IconButton
+          onClick={() => {
+            navigate('/todoList')
           }}
         >
           <CreateIcon />

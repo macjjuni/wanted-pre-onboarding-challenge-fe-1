@@ -41,6 +41,9 @@ Axios.interceptors.response.use(
       if (response.data.details === 'Token is missing') {
         toast('로그인 정보가 유효하지 않습니다.')
         router.navigate('/auth/login', { replace: true })
+      } else if (response.data.details === 'todo를 찾는 도중 문제가 생겼습니다') {
+        toast('todo를 찾는 도중 문제가 생겼습니다')
+        router.navigate('/', { replace: true })
       } else {
         toast(response.data.details)
       }

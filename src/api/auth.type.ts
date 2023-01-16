@@ -1,4 +1,4 @@
-export interface CreateUserTypes {
+export interface IUserInfo {
   email: string
   password: string
 }

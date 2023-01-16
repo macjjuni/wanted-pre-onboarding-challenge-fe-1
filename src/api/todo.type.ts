@@ -6,14 +6,14 @@ export type TodoTypes = {
   updatedAt: string
 }
 
-export interface TodosTypes {
+export interface ITodos {
   data: TodoTypes[]
 }
-export interface TodoProp {
+export interface ITodo {
   data: TodoTypes
 }
 
-export interface CRUDTodoProp {
+export interface ICRUDTodo {
   title: string
   content: string
 }

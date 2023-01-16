@@ -1,17 +1,16 @@
-import { Token } from '../../utils/token'
 import useAuth from '../../hook/useAuth'
+import useJoin from '../../hook/mutation/auth/useJoin'
+
 import { useFormik } from 'formik'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
+
 import { Button, TextField } from '@mui/material'
 import { LoginJoinForm } from '../../style'
 import { joinValidSchema } from '../../utils/validation'
-import { createUser } from '../../api/auth'
-import { type CreateUserTypes, type IAuthResTypes } from '../../api/auth.type'
-import { toast } from 'react-toastify'
-import { AxiosResponse } from 'axios'
 
 const Join = () => {
   const { token } = useAuth()
+  const { mutate: joinMutate } = useJoin()
   const navigate = useNavigate()
 
   const formik = useFormik({
@@ -26,24 +25,11 @@ const Join = () => {
         email: values.email,
         password: values.password,
       }
-      submit(params)
+      joinMutate(params)
     },
   })
 
   if (token !== null) return <Navigate to="/" replace />
-
-  // 회원가입
-  const submit = async (params: CreateUserTypes) => {
-    try {
-      const data = await createUser(params)
-      // 로컬스토리지에 토큰 저장 및 전역상태로 설정
-      Token.setToken(data.token)
-      toast('성공적으로 로그인 했습니다.')
-      navigate('/')
-    } catch (e) {
-      console.error(e)
-    }
-  }
 
   return (
     <>
