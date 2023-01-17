@@ -119,11 +119,17 @@ export const ListItem = styled.li`
     border-bottom: 1px solid #b6b6b6;
     transition: 0.3s ease;
     & > .todo-title {
+      width: calc(100% - 85px);
       font-size: 18px;
       font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     & > .todo-date {
+      width: 80px;
       font-size: 14px;
+      text-align: center;
     }
   }
   & > a:hover {
