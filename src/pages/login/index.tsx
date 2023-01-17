@@ -1,7 +1,6 @@
-import useAuth from '../../hook/useAuth'
 import useLogin from '../../hook/mutation/auth/useLogin'
 
-import { useNavigate, Navigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { userValidSchema } from '../../utils/validation'
 
@@ -9,7 +8,6 @@ import { Button, TextField } from '@mui/material'
 import { LoginJoinForm } from '../../style'
 
 const Login = () => {
-  const { token } = useAuth()
   const { mutate: loginMutate } = useLogin()
   const navigate = useNavigate()
 
@@ -23,8 +21,6 @@ const Login = () => {
       loginMutate(values)
     },
   })
-
-  if (token !== null) return <Navigate to="/" replace />
 
   return (
     <>
