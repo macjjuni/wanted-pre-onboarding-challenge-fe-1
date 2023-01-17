@@ -4,9 +4,10 @@ import { getTodoList } from '../../api/todo'
 const useGetTodos = () => {
   return useQuery(['getTodoList'], () => getTodoList(), {
     onSuccess: (data) => {
+      // data.data.reverse()
       return data
     },
-    staleTime: 5000,
+    staleTime: 30000,
     cacheTime: Infinity,
   })
 }

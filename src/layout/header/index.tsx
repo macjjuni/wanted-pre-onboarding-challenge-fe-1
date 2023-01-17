@@ -40,13 +40,6 @@ const Header = () => {
         >
           <CreateIcon />
         </IconButton>
-        <IconButton
-          onClick={() => {
-            navigate('/todoList')
-          }}
-        >
-          <CreateIcon />
-        </IconButton>
         <IconButton onClick={handleLogout}>
           <LogoutIcon />
         </IconButton>
