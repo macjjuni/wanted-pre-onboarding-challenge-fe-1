@@ -1,21 +1,22 @@
-import Button from '@mui/material/Button'
-import { CenterStyled } from './style'
 import { useNavigate } from 'react-router-dom'
+import Button from '@mui/material/Button'
 
-const Error = () => {
+import { CenterStyled } from './style'
+
+const NetworkError = () => {
   const navigate = useNavigate()
+
   return (
     <CenterStyled>
       <Button
         variant="outlined"
         onClick={() => {
-          navigate('/')
+          window.location.href = '/'
         }}
       >
-        Home
+        새로고침
       </Button>
     </CenterStyled>
   )
 }
-
-export default Error
+export default NetworkError

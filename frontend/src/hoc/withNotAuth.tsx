@@ -2,14 +2,14 @@ import { ComponentType } from 'react'
 import useAuth from '../hook/useAuth'
 import { Navigate } from 'react-router-dom'
 
-const withAuth = (AuthComponent: ComponentType) => {
+const withNotAuth = (AuthComponent: ComponentType) => {
   const AuthCheck = () => {
     const { token } = useAuth()
-    if (token === null) {
-      return <Navigate to="/auth/login" replace />
+    if (token !== null) {
+      return <Navigate to="/" replace />
     }
     return <AuthComponent />
   }
   return AuthCheck
 }
-export default withAuth
+export default withNotAuth

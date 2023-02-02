@@ -1,21 +1,27 @@
-import React, { useLayoutEffect, useState } from 'react'
-import { useParams, Navigate, useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 import { FormStyled } from '../../style'
-import { getTodoById, deleteTodo, updateTodo } from '../../api/todo'
 import { todoValidSchema } from '../../utils/validation'
 import { dateFormatter } from '../../utils/formatter'
 import { useFormik } from 'formik'
 import { TextField, Button } from '@mui/material'
 import EventNoteIcon from '@mui/icons-material/EventNote'
 import { TodoContent, TodoTitle, ButtonWrap, DateStyled } from './style'
-import { toast } from 'react-toastify'
 
-import { type TodoProp, type TodoTypes, type CRUDTodoProp } from '../../api/type'
+import useGetTodoById from '../../hook/query/useGetTodoById'
+import useUpdateTodo from '../../hook/mutation/todo/useUpdateTodo'
+import useDeleteTodo from '../../hook/mutation/todo/useDeleteTodo'
+
+import { type TodoTypes } from '../../api/todo.type'
 
 const Detail = () => {
-  const navigate = useNavigate()
-  const { id } = useParams()
-  const [isEdit, SetIsEdit] = useState<boolean>(false)
+  const { id: yetId } = useParams()
+  const id = yetId ? yetId : 'undefined'
+  const { data, isLoading } = useGetTodoById(id)
+  const { mutate: deleteMutate } = useDeleteTodo()
+  const { mutate: updateMutate } = useUpdateTodo()
+
+  const [isEditMode, setIsEditMode] = useState<boolean>(false)
   const formik = useFormik<TodoTypes>({
     initialValues: {
       id: '',
@@ -26,62 +32,35 @@ const Detail = () => {
     },
     validationSchema: todoValidSchema,
     onSubmit: (values) => {
-      handleUpdate(values)
+      const todo = {
+        title: values.title,
+        content: values.content,
+      }
+      updateMutate({ id: values.id, todo })
     },
   })
 
-  useLayoutEffect(() => {
-    handleTodo()
-  }, [])
-
-  if (id === undefined) return <Navigate to="/error" />
+  useEffect(() => {
+    if (data) formik.setValues(data.data)
+  }, [data])
 
   // 업데이트 모드로 변경
-  const handleEidt = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleEditMode = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    SetIsEdit(true)
-  }
-
-  // Todo 조회
-  const handleTodo = async () => {
-    try {
-      const res: TodoProp = await getTodoById(id)
-      formik.setValues(res.data)
-    } catch (e) {
-      console.error(e)
-    }
+    setIsEditMode(true)
   }
 
   // Todo 삭제
-  const handleDelete = async () => {
-    let isAgree = window.confirm('삭제하시겠습니까?')
-    if (!isAgree) return
-
-    try {
-      await deleteTodo(id)
-      toast('삭제를 완료했습니다.')
-      navigate('/')
-    } catch (e) {
-      console.error(e)
-    }
+  const handleDelete = () => {
+    deleteMutate(id)
   }
 
-  // Todo 업데이트
-  const handleUpdate = async (todo: CRUDTodoProp) => {
-    try {
-      const res = await updateTodo(id, todo)
-      toast('업데이트를 완료했습니다.')
-      formik.setValues(res.data)
-      SetIsEdit(false)
-    } catch (e) {
-      console.error(e)
-    }
-  }
+  if (isLoading) return <>로딩중 ...</>
 
   return (
     <>
       <FormStyled onSubmit={formik.handleSubmit}>
-        {!isEdit && (
+        {!isEditMode && (
           <>
             <TodoTitle>
               <EventNoteIcon />
@@ -94,7 +73,7 @@ const Detail = () => {
           </>
         )}
 
-        {isEdit && (
+        {isEditMode && (
           <>
             <TextField
               label="제목"
@@ -122,10 +101,9 @@ const Detail = () => {
             />
           </>
         )}
-
         <ButtonWrap>
-          {!isEdit ? (
-            <Button variant="contained" color="primary" type="button" fullWidth onClick={handleEidt}>
+          {!isEditMode ? (
+            <Button variant="contained" color="primary" type="button" fullWidth onClick={handleEditMode}>
               수정
             </Button>
           ) : (
@@ -133,7 +111,6 @@ const Detail = () => {
               수정하기
             </Button>
           )}
-
           <Button variant="contained" color="error" type="button" fullWidth onClick={handleDelete}>
             삭제
           </Button>

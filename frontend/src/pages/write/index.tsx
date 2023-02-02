@@ -1,14 +1,13 @@
-import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { todoValidSchema } from '../../utils/validation'
 import { TextField, Button } from '@mui/material'
-import { createTodo } from '../../api/todo'
 import { FormStyled } from '../../style'
 
-import { type CRUDTodoProp } from '../../api/type'
+import useCreateTodo from '../../hook/mutation/todo/useCreateTodo'
 
 const Write = () => {
-  const navigate = useNavigate()
+  const { mutate } = useCreateTodo()
+
   const formik = useFormik({
     initialValues: {
       title: '',
@@ -16,18 +15,9 @@ const Write = () => {
     },
     validationSchema: todoValidSchema,
     onSubmit: (values) => {
-      writeTodo(values)
+      mutate(values)
     },
   })
-
-  const writeTodo = async (todo: CRUDTodoProp) => {
-    try {
-      await createTodo(todo)
-      navigate('/')
-    } catch (e) {
-      console.error(e)
-    }
-  }
 
   return (
     <FormStyled onSubmit={formik.handleSubmit}>

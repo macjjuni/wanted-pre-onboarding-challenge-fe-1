@@ -1,17 +1,16 @@
-import { useEffect } from 'react'
-import useAuth from '../../hook/useAuth'
+import useJoin from '../../hook/mutation/auth/useJoin'
+
+import { useFormik } from 'formik'
+import { useNavigate } from 'react-router-dom'
+
 import { Button, TextField } from '@mui/material'
 import { LoginJoinForm } from '../../style'
-import { useFormik } from 'formik'
 import { joinValidSchema } from '../../utils/validation'
-import { useNavigate } from 'react-router-dom'
-import { createUser, type CreateUserType } from '../../api/user'
-import { toast } from 'react-toastify'
-import { Token } from '../../utils/token'
 
 const Join = () => {
-  const { token } = useAuth()
+  const { mutate: joinMutate } = useJoin()
   const navigate = useNavigate()
+
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -24,26 +23,9 @@ const Join = () => {
         email: values.email,
         password: values.password,
       }
-      submit(params)
+      joinMutate(params)
     },
   })
-
-  // 회원가입
-  const submit = async (params: CreateUserType) => {
-    try {
-      const { token: getToken } = await createUser(params)
-      // 로컬스토리지에 토큰 저장 및 전역상태로 설정
-      Token.setToken(getToken)
-      toast('성공적으로 로그인 했습니다.')
-      navigate('/')
-    } catch (e) {
-      console.error(e)
-    }
-  }
-
-  useEffect(() => {
-    if (token !== null) navigate('/')
-  }, [token])
 
   return (
     <>
@@ -92,7 +74,7 @@ const Join = () => {
             variant="outlined"
             type="button"
             onClick={() => {
-              navigate('/login')
+              navigate('/auth/login')
             }}
           >
             로그인

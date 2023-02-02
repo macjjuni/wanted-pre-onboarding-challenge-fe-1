@@ -1,21 +1,20 @@
 import { useState, useEffect } from 'react'
 import { dateFormatter } from '../../utils/formatter'
-import { getTodoList } from '../../api/todo'
-import { type TodoTypes } from '../../api/type'
+import { type TodoTypes } from '../../api/todo.type'
 import { Link } from 'react-router-dom'
 import { ListWrap, ListItem } from '../../style'
 
+import useGetTodos from '../../hook/query/useGetTodos'
+
 const Home = () => {
   const [list, setList] = useState<TodoTypes[]>()
-
-  const getTodos = async () => {
-    const { data } = await getTodoList()
-    setList(data)
-  }
+  const { data, isLoading } = useGetTodos()
 
   useEffect(() => {
-    getTodos()
-  }, [])
+    if (data) setList(data.data)
+  }, [data])
+
+  if (isLoading) return <>로딩중 ...</>
 
   return (
     <>
