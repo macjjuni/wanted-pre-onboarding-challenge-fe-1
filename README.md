@@ -20,6 +20,16 @@
 
 <br>
 
+## 프리온보딩 챌린지 정보 및 요구사항
+
+<br>
+
+- [사정과제 및 안내](https://github.com/starkoora/wanted-pre-onboarding-challenge-fe-1-api#login)
+
+
+<br>
+
+
 ## 🌲 프로젝트 구조
 
 ```
@@ -62,26 +72,30 @@
 
 ## 기능구현 소개
 
-- [x] 회원가입/로그인
-- [x] 할 일 등록/수정/삭제
-- [x]
-- [x]
+- [x] 회원가입/로그인 기능(유효성 검사 O)
+- [x] Todo 등록/수정/삭제
+- [x] Todo 상세조회
+- [x] 리액트 쿼리를 사용한 Todo 데이터 캐싱
 
-## React-Query 적용 전/후
+<br>
 
-### React-Query 추가 전 Login 컴포넌트
+## 기술 스택
+
+- [x] React(CRA, SPA), React-Router v6
+- [x] TypeScript
+- [x] Axios, React-Query
+- [x] MUI, Styled-Components
+- [x] formik, yup
+
+<br>
+
+## 리팩토링 결과
+
+### React-Query & 관심사 분리를 적용하기 이전 Login 컴포넌트
 
 ```
-import useAuth from '../../hook/useAuth'
-import { Button, TextField } from '@mui/material'
-import { LoginJoinForm } from '../../style'
-import { useFormik } from 'formik'
-import { userValidSchema } from '../../utils/validation'
-import { useNavigate } from 'react-router-dom'
-import { Token } from '../../utils/token'
-import { loginUser } from '../../api/auth'
-import { type IUserInfo } from '../../api/auth.type'
-
+// Login.tsx
+...
 const Login = () => {
   const navigate = useNavigate()
   const { token } = useAuth()
@@ -96,7 +110,7 @@ const Login = () => {
     },
   })
 
-  // 로그인
+  // ************ 로그인 API 호출 및 처리 로직 ************
   const submit = async (params: IUserInfo) => {
     try {
       const data = await loginUser(params)
@@ -109,27 +123,41 @@ const Login = () => {
   }
 
   if (token !== null) return <Navigate to="/" replace />
-  ... View Logic ...
+  ...
 ```
 
-### React-Query 추가 후 Login 컴포넌트와 useLogin Hook
+<br>
+
+Login 컴포넌트는 사용자 정보 유효성 검사 등 여러 로직과 API 호출, 이후 처리 로직도 포함되어 있는 도메인과 의존성이 높은 컴포넌트다. 
+
+이 경우 추후 예상치 못한 변경에 유연하게 대처하기 어려우므로 React-Query를 사용한 관심사 분리를 통해 나중에 생길 변경사항에 유연하게 대처할 수 있다.
+
+<br>
+
+### React-Query 적용 후 Login 컴포넌트와 분리된 useLogin
+
+
+```
+// useLogin.tsx
+...
+const useLogin = () => {
+  return useMutation((userInfo: IUserInfo) => loginUser(userInfo), {
+    onSuccess: (data) => {
+      localStorage.setItem('token', data.token)
+      router.navigate('/')
+    },
+  })
+}
+export default useLogin
+```
 
 ```
 // Login.tsx
-
-import { useNavigate } from 'react-router-dom'
-import { useFormik } from 'formik'
-import { userValidSchema } from '../../utils/validation'
-import useAuth from '../../hook/useAuth'
-
-import { Button, TextField } from '@mui/material'
-import { LoginJoinForm } from '../../style'
-
-import useLogin from '../../hook/mutation/auth/useLogin'
-
+...
 const Login = () => {
+
   const navigate = useNavigate()
-  const { mutate: loginMutate } = useLogin()
+  const { mutate: loginMutate } = useLogin() // <- useLogin hook
   const { token } = useAuth()
   const formik = useFormik({
     initialValues: {
@@ -146,41 +174,43 @@ const Login = () => {
   ... View Logic ...
 ```
 
-```
-// useLogin.tsx
+<br>
 
-import { useMutation } from 'react-query'
-import { loginUser } from '../../../api/auth'
-import { type IUserInfo } from '../../../api/auth.type'
-import { router } from '../../..'
-
-const useLogin = () => {
-  return useMutation((userInfo: IUserInfo) => loginUser(userInfo), {
-    onSuccess: (data) => {
-      localStorage.setItem('token', data.token)
-      router.navigate('/')
-    },
-  })
-}
-export default useLogin
-```
-
-컴포넌트와 API 로직을 react-query 훅으로 분리함으로 써 코드 가독성 및 API 재사용성 증가
+Login 컴포넌트와 useLogin hook으로 분리된 상태이다. API호출 및 이후 처리 로직을 useLogin hook이 담당하면 Login 컴포넌트는 의존성이 낮은 상태에서 UI 구현에만 집중할 수 있다. 또한 쉽게 React-Query의 캐싱 전략을 가져갈 수 있는 이점도 있다.
 
 <br>
 
-## - 패키지 설치 명령어
+
+## 패키지 설치 명령어
 
 ```
-> yarn
-> npm i
+// 1. 백엔드 패키지 설치
+> cd backend && yarn
+//   또는
+> cd backend && npm i
+
+// 2. 프론트엔드 패키지 설치
+> cd frontend && yarn
+//   또는
+> cd frontend && npm i
 ```
+## 개발서버 실행 명령어
 
-<br>
+```
+// 1. 백엔드 패키지 설치
+> cd backend && yarn start
+//   또는
+> cd backend && npm run start
 
-## - 빌드 명령어
+// 2. 프론트엔드 패키지 설치
+> cd frontend && yarn start
+//   또는
+> cd frontend && npm run start
+```
+## 빌드 명령어
 
 ```
 > yarn build
+//  or
 > npm run build
 ```
