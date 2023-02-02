@@ -214,3 +214,10 @@ Login 컴포넌트와 useLogin hook으로 분리된 상태이다. API호출 및 
 //  or
 > npm run build
 ```
+
+<br>
+
+## 이번 챌린지를 계기로 작성된 블로그 포스팅
+
+- [리액트 쿼리(react-query)로 관심사 분리하기](https://juni-official.tistory.com/276)
+- [Next.js에 nProgress 입히기](https://juni-official.tistory.com/275)
